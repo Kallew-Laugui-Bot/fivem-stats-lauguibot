@@ -1,288 +1,104 @@
 const fetch = require('node-fetch');
 
 class Stats {
-	constructor(ip) {
-		if (!ip) throw Error('Please provide an IP.');
+    constructor(ip) {
+        if (!ip) throw new Error('Please provide an IP.');
+        this.ip = ip;
+        this.baseUrl = `http://${this.ip}/info.json`; // Define a base URL to avoid repetition
+    }
 
-		this.ip = ip;
-	}
+    async fetchJson(url) {
+        try {
+            const response = await fetch(url);
+            return await response.json();
+        } catch (error) {
+            throw new Error(`Fetch error: ${error.message}`);
+        }
+    }
 
-	getPlayers() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/players.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let players = body;
-					send(players.length);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getPlayers() {
+        const url = `http://${this.ip}/players.json`;
+        const data = await this.fetchJson(url);
+        return data.length;
+    }
 
-	getPlayersAll() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/players.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let players = body;
-					send(players);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getPlayersAll() {
+        const url = `http://${this.ip}/players.json`;
+        return await this.fetchJson(url);
+    }
 
-	getServerStatus() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let server_status = {
-						online: true,
-					}
-					send(server_status);
-				})
-				.catch(function (error) {
-					let server_status = {
-						online: false
-					}
-					if (error.response == undefined) send(server_status)
-				});
-		});
-	}
+    async getServerStatus() {
+        try {
+            await this.fetchJson(this.baseUrl);
+            return { online: true };
+        } catch {
+            return { online: false };
+        }
+    }
 
-	getResources() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let resources = body.resources;
-					send(resources);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getResources() {
+        const data = await this.fetchJson(this.baseUrl);
+        return data.resources;
+    }
 
-	getOnesync() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let onesync = body.vars.onesync_enabled;
-					send(onesync);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getOnesync() {
+        const data = await this.fetchJson(this.baseUrl);
+        return data.vars.onesync_enabled;
+    }
 
-	getMaxPlayers() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let maxClients = body.vars.sv_maxClients;
-					send(maxClients);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getMaxPlayers() {
+        const data = await this.fetchJson(this.baseUrl);
+        return data.vars.sv_maxClients;
+    }
 
-	getLocale() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let locale = body.vars.locale;
-					send(locale);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getLocale() {
+        const data = await this.fetchJson(this.baseUrl);
+        return data.vars.locale;
+    }
 
-	getGamename() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let gamename = body.vars.gamename;
-					send(gamename);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getGamename() {
+        const data = await this.fetchJson(this.baseUrl);
+        return data.vars.gamename;
+    }
 
-	getEnhancedHostSupport() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let enhancedHostSupport = body.vars.sv_enhancedHostSupport;
-					send(enhancedHostSupport);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getEnhancedHostSupport() {
+        const data = await this.fetchJson(this.baseUrl);
+        return data.vars.sv_enhancedHostSupport;
+    }
 
-	getlicenseKeyToken() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let licenseKeyToken = body.vars.sv_licenseKeyToken;
-					send(licenseKeyToken);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getlicenseKeyToken() {
+        const data = await this.fetchJson(this.baseUrl);
+        return data.vars.sv_licenseKeyToken;
+    }
 
-	getScriptHookAllowed() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let scriptHookAllowed = body.vars.sv_scriptHookAllowed;
-					send(scriptHookAllowed);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getScriptHookAllowed() {
+        const data = await this.fetchJson(this.baseUrl);
+        return data.vars.sv_scriptHookAllowed;
+    }
 
-	getTags() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let tags = body.vars.tags;
-					send(tags);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getTags() {
+        const data = await this.fetchJson(this.baseUrl);
+        return data.vars.tags;
+    }
 
-	getServer() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let server = body;
-					send(server);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getServer() {
+        return await this.fetchJson(this.baseUrl);
+    }
 
-	getBannerConnecting() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let server = body.vars.banner_connecting;
-					send(server);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getBannerConnecting() {
+        const data = await this.fetchJson(this.baseUrl);
+        return data.vars.banner_connecting;
+    }
 
-	getBannerDetail() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let server = body.vars.banner_detail;
-					send(server);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getBannerDetail() {
+        const data = await this.fetchJson(this.baseUrl);
+        return data.vars.banner_detail;
+    }
 
-	getServerDesc() {
-		return new Promise((send, err) => {
-			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET",
-				"timeout": '1000'
-			})
-				.then(res => res.json())
-				.then(body => {
-					let server = body.vars.sv_projectDesc;
-					send(server);
-				})
-				.catch(function (error) {
-					err(error);
-				});
-		});
-	}
+    async getServerDesc() {
+        const data = await this.fetchJson(this.baseUrl);
+        return data.vars.sv_projectDesc;
+    }
 }
 
-module.exports.Stats = Stats;
+module.exports = { Stats };
