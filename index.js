@@ -10,7 +10,8 @@ class Stats {
 	getPlayers() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/players.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000",
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -26,7 +27,8 @@ class Stats {
 	getPlayersAll() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/players.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -42,7 +44,8 @@ class Stats {
 	getServerStatus() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -63,7 +66,8 @@ class Stats {
 	getResources() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -79,7 +83,8 @@ class Stats {
 	getOnesync() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -95,7 +100,8 @@ class Stats {
 	getMaxPlayers() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -111,7 +117,8 @@ class Stats {
 	getLocale() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -127,7 +134,8 @@ class Stats {
 	getGamename() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -143,7 +151,8 @@ class Stats {
 	getEnhancedHostSupport() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -159,7 +168,8 @@ class Stats {
 	getlicenseKeyToken() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -175,7 +185,8 @@ class Stats {
 	getScriptHookAllowed() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -191,7 +202,8 @@ class Stats {
 	getTags() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -207,7 +219,8 @@ class Stats {
 	getServer() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -223,7 +236,8 @@ class Stats {
 	getBannerConnecting() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -239,7 +253,8 @@ class Stats {
 	getBannerDetail() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
@@ -255,7 +270,8 @@ class Stats {
 	getServerDesc() {
 		return new Promise((send, err) => {
 			fetch(`http://${this.ip}/info.json`, {
-				"method": "GET"
+				"method": "GET",
+				"timeout": "10000"
 			})
 				.then(res => res.json())
 				.then(body => {
